@@ -7,5 +7,6 @@ class Pawn
   def initialize(type)
     @piece = type.zero? ? "\u2659" : "\u265F"
     @type = type
+    @valid_moves = []
   end
 end
