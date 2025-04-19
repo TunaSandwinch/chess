@@ -9,4 +9,20 @@ class Pawn
     @type = type
     @valid_moves = []
   end
+
+  def white_moves(position)
+    [
+      [position[:row] - 1, position[:column]],
+      [position[:row] - 1, position[:column] - 1],
+      [position[:row] - 1, position[:column] + 3]
+    ]
+  end
+
+  def black_moves(position)
+    [
+      [position[:row] + 1, position[:column]],
+      [position[:row] + 1, position[:column] - 1],
+      [position[:row] + 1, position[:column] + 1]
+    ]
+  end
 end
