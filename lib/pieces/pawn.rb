@@ -11,18 +11,22 @@ class Pawn
   end
 
   def white_moves(position)
+    row = position[:row]
+    column = position[:column]
     [
-      [position[:row] - 1, position[:column]],
-      [position[:row] - 1, position[:column] - 1],
-      [position[:row] - 1, position[:column] + 3]
+      [row - 1, column],
+      [row - 1, column - 1],
+      [row - 1, column + 1]
     ]
   end
 
   def black_moves(position)
+    row = position[:row]
+    column = position[:column]
     [
-      [position[:row] + 1, position[:column]],
-      [position[:row] + 1, position[:column] - 1],
-      [position[:row] + 1, position[:column] + 1]
+      [row + 1, column],
+      [row + 1, column - 1],
+      [row + 1, column + 3]
     ]
   end
 end
