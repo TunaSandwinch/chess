@@ -5,7 +5,7 @@ class Pawn
   attr_accessor :piece, :type
 
   def initialize(color)
-    @piece = type.zero? ? "\u2659" : "\u265F"
+    @piece = color.zero? ? "\u2659" : "\u265F"
     @color = color
     @valid_moves = []
   end
