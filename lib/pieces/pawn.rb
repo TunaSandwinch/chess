@@ -26,7 +26,7 @@ class Pawn
     [
       [row + 1, column],
       [row + 1, column - 1],
-      [row + 1, column + 3]
+      [row + 1, column + 1]
     ]
   end
 end
