@@ -2,7 +2,7 @@
 
 # a class for all pawn related operation
 class Pawn
-  attr_accessor :piece, :type
+  attr_accessor :piece, :color
 
   def initialize(color)
     @piece = color.zero? ? "\u2659" : "\u265F"
