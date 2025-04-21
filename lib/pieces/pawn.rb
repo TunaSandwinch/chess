@@ -8,6 +8,7 @@ class Pawn
     @piece = color.zero? ? "\u2659" : "\u265F"
     @color = color
     @valid_moves = []
+    @board = 'REMOVE THIS AFTER TESTING'
   end
 
   def capture_moves(position)
@@ -20,5 +21,8 @@ class Pawn
       [row + increment, column + 1]
     ]
   end
-  # refactor code so that capture and move is different
+
+  def valid_capture_moves(position)
+    capture_moves(position).select { |row, column| row.between?(0, 7) && column.between?(0, 7) }
+  end
 end
