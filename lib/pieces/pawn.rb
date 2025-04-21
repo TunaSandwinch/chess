@@ -10,7 +10,7 @@ class Pawn
     @valid_moves = []
   end
 
-  def capture_move(position)
+  def capture_moves(position)
     row = position[:row]
     column = position[:column]
     increment = color.zero? ? -1 : 1
