@@ -22,7 +22,11 @@ class Pawn
     ]
   end
 
-  def valid_capture_moves(position)
+  def inrange_capture_moves(position)
     capture_moves(position).select { |row, column| row.between?(0, 7) && column.between?(0, 7) }
   end
+
+  # def available_capture_moves(position, board)
+  #   valid_capture_moves.select {|row, column|}
+  # end
 end
