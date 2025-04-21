@@ -40,13 +40,13 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe '#valid_capture_moves' do
+  describe '#inrange_capture_moves' do
     context 'when all the moves are in range' do
       it 'returns the same set of moves' do
         expected_set_of_moves = [[5, 1], [5, 3]]
         allow(pawn_white).to receive(:capture_moves).and_return(expected_set_of_moves)
         initial_position = { row: 6, column: 2 }
-        set_of_moves = pawn_white.valid_capture_moves(initial_position)
+        set_of_moves = pawn_white.inrange_capture_moves(initial_position)
         expect(set_of_moves).to eql(expected_set_of_moves)
       end
     end
@@ -56,7 +56,7 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
         initial_set_of_moves = [[5, -1], [5, 1]]
         allow(pawn_white).to receive(:capture_moves).and_return(initial_set_of_moves)
         initial_position = { row: 6, column: 0 }
-        set_of_moves = pawn_white.valid_capture_moves(initial_position)
+        set_of_moves = pawn_white.inrange_capture_moves(initial_position)
         expected_move = [[5, 1]]
         expect(set_of_moves).to eq(expected_move)
       end
