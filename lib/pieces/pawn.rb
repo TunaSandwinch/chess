@@ -10,23 +10,15 @@ class Pawn
     @valid_moves = []
   end
 
-  def white_moves(position)
+  def capture_move(position)
     row = position[:row]
     column = position[:column]
-    [
-      [row - 1, column],
-      [row - 1, column - 1],
-      [row - 1, column + 1]
-    ]
-  end
+    increment = color.zero? ? -1 : 1
 
-  def black_moves(position)
-    row = position[:row]
-    column = position[:column]
     [
-      [row + 1, column],
-      [row + 1, column - 1],
-      [row + 1, column + 1]
+      [row + increment, column - 1],
+      [row + increment, column + 1]
     ]
   end
+  # refactor code so that capture and move is different
 end
