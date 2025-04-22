@@ -62,4 +62,50 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
       end
     end
   end
+
+  describe '#valid_capture_moves' do # rubocop:disable Metrics/BlockLength
+    let(:black_horse) { double('horse', color: 1) }
+    let(:black_pawn) { double('pawn', color: 1) }
+    let(:grid_val) { Array.new(8) { Array.new(8, ' ') } }
+    let(:board) { double('board', grid: grid_val) }
+    context 'when the tile of the move/s is empty' do
+      let(:board) { double('board', grid: Array.new(8) { Array.new(8, ' ') }) }
+      it 'returns an empty array' do
+        capture_moves = [[5, 1], [5, 3]]
+        allow(pawn_white).to receive(:inrange_capture_moves).and_return(capture_moves)
+        postion = { row: 6, column: 2 }
+        valid_moves = pawn_white.valid_capture_moves(postion, board)
+        expect(valid_moves.empty?).to be(true)
+      end
+    end
+
+    context 'when the tile of the move/s has a piece of opposite color' do
+      before do
+        grid_val[5][1] = black_horse
+        grid_val[5][3] = black_pawn
+      end
+
+      it 'returns the same set of moves' do
+        capture_moves = [[5, 1], [5, 3]]
+        allow(pawn_white).to receive(:inrange_capture_moves).and_return(capture_moves)
+        postion = { row: 6, column: 2 }
+        valid_moves = pawn_white.valid_capture_moves(postion, board)
+        expect(valid_moves).to eq(capture_moves)
+      end
+    end
+
+    context 'when the tile of the move/s has a piece of same color' do
+      before do
+        grid_val[5][1] = double('queen', color: 0)
+        grid_val[5][3] = double('bishop', color: 0)
+      end
+      it 'returns an empty array' do
+        capture_moves = [[5, 1], [5, 3]]
+        allow(pawn_white).to receive(:inrange_capture_moves).and_return(capture_moves)
+        postion = { row: 6, column: 2 }
+        valid_moves = pawn_white.valid_capture_moves(postion, board)
+        expect(valid_moves.empty?).to be(true)
+      end
+    end
+  end
 end
