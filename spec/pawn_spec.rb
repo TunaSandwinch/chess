@@ -108,4 +108,31 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
       end
     end
   end
+
+  describe '#forward_move' do
+    let(:grid_val) { Array.new(8) { Array.new(8, ' ') } }
+    let(:knight_black) { double('knight', color: 1) }
+    let(:knight_white) { double('knight') }
+    let(:board) { double('board', grid: grid_val) }
+    context 'when the tile of the move is empty' do
+      it 'it returns an array containing the move coordinates' do
+        initial_position = { row: 2, column: 2 }
+        expected_result = [[3, 2]]
+        result = pawn_black.forward_move(initial_position, board)
+        expect(result).to eq(expected_result)
+      end
+    end
+
+    context 'when the tile of the move is not empty' do
+      before do
+        grid_val[3][2] = knight_black
+      end
+      it 'returns an empty array' do
+        initial_position = { row: 2, column: 2 }
+        expected_result = []
+        result = pawn_black.forward_move(initial_position, board)
+        expect(result).to eq(expected_result)
+      end
+    end
+  end
 end
