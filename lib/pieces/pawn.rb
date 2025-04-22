@@ -7,7 +7,6 @@ class Pawn
   def initialize(color)
     @piece = color.zero? ? "\u2659" : "\u265F"
     @color = color
-    @valid_moves = ''
   end
 
   def capture_moves(position)
@@ -39,5 +38,9 @@ class Pawn
     return [[row + increment, column]] if board.grid[row + increment][column] == ' '
 
     []
+  end
+
+  def available_moves(position, board)
+    forward_move(position, board) + valid_capture_moves(position, board)
   end
 end
