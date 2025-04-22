@@ -68,7 +68,7 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
     let(:black_pawn) { double('pawn', color: 1) }
     let(:grid_val) { Array.new(8) { Array.new(8, ' ') } }
     let(:board) { double('board', grid: grid_val) }
-    context 'when the tile of the move/s is empty' do
+    context 'when the tile of all the moves is empty' do
       let(:board) { double('board', grid: Array.new(8) { Array.new(8, ' ') }) }
       it 'returns an empty array' do
         capture_moves = [[5, 1], [5, 3]]
@@ -79,7 +79,7 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
       end
     end
 
-    context 'when the tile of the move/s has a piece of opposite color' do
+    context 'when the tile of all the moves has a piece of opposite color' do
       before do
         grid_val[5][1] = black_horse
         grid_val[5][3] = black_pawn
@@ -94,7 +94,7 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
       end
     end
 
-    context 'when the tile of the move/s has a piece of same color' do
+    context 'when the tile of all the moves has a piece of same color' do
       before do
         grid_val[5][1] = double('queen', color: 0)
         grid_val[5][3] = double('bishop', color: 0)
@@ -133,6 +133,23 @@ describe Pawn do # rubocop:disable Metrics/BlockLength
         result = pawn_black.forward_move(initial_position, board)
         expect(result).to eq(expected_result)
       end
+    end
+  end
+
+  describe '#available_moves' do
+    it 'combines forward moves and valid capture moves' do
+      allow(pawn_black).to receive(:forward_move).and_return([[5, 6]])
+      allow(pawn_black).to receive(:valid_capture_moves).and_return([[1, 2], [3, 4]])
+      set_of_moves = [[5, 6], [1, 2], [3, 4]]
+      result = pawn_black.available_moves(1, 2)
+      expect(result).to eq(set_of_moves)
+    end
+
+    it 'it returns an empty array if there is no valid moves' do
+      allow(pawn_black).to receive(:forward_move).and_return([])
+      allow(pawn_black).to receive(:valid_capture_moves).and_return([])
+      result = pawn_black.available_moves(1, 2)
+      expect(result.empty?).to be(true)
     end
   end
 end
