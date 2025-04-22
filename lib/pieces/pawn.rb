@@ -30,5 +30,14 @@ class Pawn
       board.grid[row][column] == ' ' || board.grid[row][column].color == color
     end
   end
-  # commit bro
+
+  def forward_move(position, board)
+    row = position[:row]
+    column = position[:column]
+    increment = color.zero? ? -1 : 1
+
+    return [[row + increment, column]] if board.grid[row + increment][column] == ' '
+
+    []
+  end
 end
