@@ -7,8 +7,7 @@ class Pawn
   def initialize(color)
     @piece = color.zero? ? "\u2659" : "\u265F"
     @color = color
-    @valid_moves = []
-    @board = 'REMOVE THIS AFTER TESTING'
+    @valid_moves = ''
   end
 
   def capture_moves(position)
@@ -26,7 +25,10 @@ class Pawn
     capture_moves(position).select { |row, column| row.between?(0, 7) && column.between?(0, 7) }
   end
 
-  # def available_capture_moves(position, board)
-  #   valid_capture_moves.select {|row, column|}
-  # end
+  def valid_capture_moves(position, board)
+    inrange_capture_moves(position).reject do |row, column|
+      board.grid[row][column] == ' ' || board.grid[row][column].color == color
+    end
+  end
+  # commit bro
 end
