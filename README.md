@@ -1,2 +1,2 @@
 # chess
-chess project from the odin-project
+command line chess project from the odin-project's ruby course
