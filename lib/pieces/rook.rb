@@ -8,4 +8,26 @@ class Rook
     @piece = color.zero? ? "\u2656" : "\u265C"
     @color = color
   end
+
+  def upward_moves(position)
+    row = position[:row]
+    column = position[:column]
+    moves = []
+    until row.zero?
+      row -= 1
+      moves << [row, column]
+    end
+    moves
+  end
+
+  def downward_moves(position)
+    row = position[:row]
+    column = position[:column]
+    moves = []
+    until row == 7
+      row += 1
+      moves << [row, column]
+    end
+    moves
+  end
 end
