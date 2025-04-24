@@ -30,4 +30,26 @@ class Rook
     end
     moves
   end
+
+  def right_moves(position)
+    row = position[:row]
+    column = position[:column]
+    moves = []
+    until column == 7
+      column += 1
+      moves << [row, column]
+    end
+    moves
+  end
+
+  def left_moves(position)
+    row = position[:row]
+    column = position[:column]
+    moves = []
+    until column.zero?
+      column -= 1
+      moves << [row, column]
+    end
+    moves
+  end
 end
