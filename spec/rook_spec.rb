@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/pieces/rook'
-describe Rook do
+describe Rook do # rubocop:disable Metrics/BlockLength
   subject(:white_rook) { Rook.new(0) }
   subject(:black_rook) { Rook.new(1) }
   let(:grid_val) { Array.new(8) { Array.new(8, '  ') } }
@@ -19,7 +19,7 @@ describe Rook do
       end
     end
 
-    it 'returns an empty array if there is no available moves' do
+    it 'returns an empty array if there is valid moves' do
       initial_position = { row: 0, column: 0 }
       set_of_moves = black_rook.upward_moves(initial_position)
       expect(set_of_moves.empty?).to be(true)
@@ -38,9 +38,47 @@ describe Rook do
       end
     end
 
-    it 'returns an empty array if there is no available moves' do
+    it 'returns an empty array if there is valid moves' do
       initial_position = { row: 7, column: 0 }
       set_of_moves = black_rook.downward_moves(initial_position)
+      expect(set_of_moves.empty?).to be(true)
+    end
+  end
+
+  describe 'right_moves' do
+    it 'returns an array with the correct set of moves' do
+      initial_position = { row: 4, column: 3 }
+      expected_moves = [[4, 4], [4, 5], [4, 6], [4, 7]]
+      set_of_moves = white_rook.right_moves(initial_position)
+      moves_length = set_of_moves.length
+      expect(moves_length).to eq(4)
+      expected_moves.each do |expected_move|
+        expect(set_of_moves).to include(expected_move)
+      end
+    end
+
+    it 'returns an empty array if there is no valid moves' do
+      initial_position = { row: 4, column: 7 }
+      set_of_moves = white_rook.right_moves(initial_position)
+      expect(set_of_moves.empty?).to be(true)
+    end
+  end
+
+  describe 'left_moves' do
+    it 'returns an array with the correct set of moves' do
+      initial_position = { row: 4, column: 3 }
+      expected_moves = [[4, 2], [4, 1], [4, 0]]
+      set_of_moves = white_rook.left_moves(initial_position)
+      moves_length = set_of_moves.length
+      expect(moves_length).to eq(3)
+      expected_moves.each do |expected_move|
+        expect(set_of_moves).to include(expected_move)
+      end
+    end
+
+    it 'returns an empty array if there is no valid moves' do
+      initial_position = { row: 4, column: 0 }
+      set_of_moves = white_rook.left_moves(initial_position)
       expect(set_of_moves.empty?).to be(true)
     end
   end
