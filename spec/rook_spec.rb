@@ -1,0 +1,47 @@
+# frozen_string_literal: true
+
+require_relative '../lib/pieces/rook'
+describe Rook do
+  subject(:white_rook) { Rook.new(0) }
+  subject(:black_rook) { Rook.new(1) }
+  let(:grid_val) { Array.new(8) { Array.new(8, '  ') } }
+  let(:board) { double('board', grid: grid_val) }
+
+  describe '#upward_moves' do
+    it 'returns an array with the correct set of moves ' do
+      initial_position = { row: 4, column: 3 }
+      expected_moves = [[3, 3], [2, 3], [1, 3], [0, 3]]
+      set_of_moves = white_rook.upward_moves(initial_position)
+      moves_length = set_of_moves.length
+      expect(moves_length).to eq(4)
+      expected_moves.each do |expected_move|
+        expect(set_of_moves).to include(expected_move)
+      end
+    end
+
+    it 'returns an empty array if there is no available moves' do
+      initial_position = { row: 0, column: 0 }
+      set_of_moves = black_rook.upward_moves(initial_position)
+      expect(set_of_moves.empty?).to be(true)
+    end
+  end
+
+  describe '#downward_moves' do
+    it 'returns an array with the correct set of moves ' do
+      initial_position = { row: 4, column: 3 }
+      expected_moves = [[5, 3], [6, 3], [7, 3]]
+      set_of_moves = white_rook.downward_moves(initial_position)
+      moves_length = set_of_moves.length
+      expect(moves_length).to eq(3)
+      expected_moves.each do |expected_move|
+        expect(set_of_moves).to include(expected_move)
+      end
+    end
+
+    it 'returns an empty array if there is no available moves' do
+      initial_position = { row: 7, column: 0 }
+      set_of_moves = black_rook.downward_moves(initial_position)
+      expect(set_of_moves.empty?).to be(true)
+    end
+  end
+end
