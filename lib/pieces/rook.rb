@@ -11,14 +11,14 @@ class Rook
     @color = color
   end
 
-  def upward_moves(position)
+  def upward_moves(position, board)
     row = position[:row]
     column = position[:column]
     moves = []
     until row.zero?
       row -= 1
       moves << [row, column]
-      # break unless continue_step?({ row: row, column: column }, board)
+      break unless continue_step?({ row: row, column: column }, board)
     end
     moves
   end
