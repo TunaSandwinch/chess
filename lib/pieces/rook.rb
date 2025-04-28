@@ -23,13 +23,14 @@ class Rook
     moves
   end
 
-  def downward_moves(position)
+  def downward_moves(position, board)
     row = position[:row]
     column = position[:column]
     moves = []
     until row == 7
       row += 1
       moves << [row, column]
+      break unless continue_step?({ row: row, column: column }, board)
     end
     moves
   end
