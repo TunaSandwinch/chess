@@ -4,7 +4,7 @@ require_relative '../lib/pieces/rook'
 describe Rook do # rubocop:disable Metrics/BlockLength
   subject(:white_rook) { Rook.new(0) }
   subject(:black_rook) { Rook.new(1) }
-  let(:grid_val) { Array.new(8) { Array.new(8, '  ') } }
+  let(:grid_val) { Array.new(8) { Array.new(8, ' ') } }
   let(:board) { double('board', grid: grid_val) }
 
   describe '#upward_moves' do
@@ -45,7 +45,7 @@ describe Rook do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe 'right_moves' do
+  describe '#right_moves' do
     it 'returns an array with the correct set of moves' do
       initial_position = { row: 4, column: 3 }
       expected_moves = [[4, 4], [4, 5], [4, 6], [4, 7]]
@@ -64,7 +64,7 @@ describe Rook do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe 'left_moves' do
+  describe '#left_moves' do
     it 'returns an array with the correct set of moves' do
       initial_position = { row: 4, column: 3 }
       expected_moves = [[4, 2], [4, 1], [4, 0]]
@@ -80,6 +80,31 @@ describe Rook do # rubocop:disable Metrics/BlockLength
       initial_position = { row: 4, column: 0 }
       set_of_moves = white_rook.left_moves(initial_position)
       expect(set_of_moves.empty?).to be(true)
+    end
+  end
+
+  describe '#continue_step?' do
+    before do
+      grid_val[4][1] = double('pawn', color: 1)
+      grid_val[4][2] = double('pawn', color: 0)
+    end
+
+    it 'returns false if the position has a piece of opposite color' do
+      position = { row: 4, column: 1 }
+      result = white_rook.continue_step?(position, board)
+      expect(result).to be false
+    end
+
+    it 'returns false if the position has a piece of same color' do
+      position = { row: 4, column: 2 }
+      result = white_rook.continue_step?(position, board)
+      expect(result).to be false
+    end
+
+    it 'it returns true if the position is empty' do
+      position = { row: 4, column: 3 }
+      result = white_rook.continue_step?(position, board)
+      expect(result).to be true
     end
   end
 end
