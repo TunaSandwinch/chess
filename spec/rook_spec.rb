@@ -34,28 +34,41 @@ describe Rook do # rubocop:disable Metrics/BlockLength
       end
     end
 
-    it 'returns an empty array if there is valid moves' do
+    it 'returns an empty array when there is no valid moves' do
       initial_position = { row: 0, column: 0 }
       set_of_moves = black_rook.upward_moves(initial_position, board)
       expect(set_of_moves).to eq([])
     end
   end
 
-  describe '#downward_moves' do
-    it 'returns an array with the correct set of moves ' do
-      initial_position = { row: 4, column: 3 }
-      expected_moves = [[5, 3], [6, 3], [7, 3]]
-      set_of_moves = white_rook.downward_moves(initial_position)
+  describe '#downward_moves' do # rubocop:disable Metrics/BlockLength
+    before do
+      grid_val[5][0] = double('pawn', color: 1)
+      grid_val[5][1] = double('pawn', color: 0)
+    end
+    it 'returns an array with the correct set of moves when the last move has a piece of opposite color' do
+      initial_position = { row: 2, column: 0 }
+      expected_moves = [[3, 0], [4, 0], [5, 0]]
+      set_of_moves = white_rook.downward_moves(initial_position, board)
       moves_length = set_of_moves.length
       expect(moves_length).to eq(3)
       expected_moves.each do |expected_move|
         expect(set_of_moves).to include(expected_move)
       end
     end
-
-    it 'returns an empty array if there is valid moves' do
+    it 'returns an array with the correct set of moves when the last move has a piece of same color' do
+      initial_position = { row: 2, column: 1 }
+      expected_moves = [[3, 1], [4, 1], [5, 1]]
+      set_of_moves = white_rook.downward_moves(initial_position, board)
+      moves_length = set_of_moves.length
+      expect(moves_length).to eq(3)
+      expected_moves.each do |expected_move|
+        expect(set_of_moves).to include(expected_move)
+      end
+    end
+    it 'returns an empty array when there is no valid moves' do
       initial_position = { row: 7, column: 0 }
-      set_of_moves = black_rook.downward_moves(initial_position)
+      set_of_moves = black_rook.downward_moves(initial_position, board)
       expect(set_of_moves.empty?).to be(true)
     end
   end
