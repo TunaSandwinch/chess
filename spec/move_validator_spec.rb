@@ -24,7 +24,12 @@ describe MovesValidator do # rubocop:disable Metrics/BlockLength
       grid_val[2][2] = king_black
     end
 
-    it 'return the same array of moves if the last move is an empty tile' do
+    it 'returns an empty array if the set of moves is empty' do
+      set_of_moves = []
+      result = dummy_white.remove_invalid_last_move(set_of_moves, board)
+      expect(result.empty?).to be true
+    end
+    it 'returns the same array of moves if the last move is an empty tile' do
       set_of_moves = [[4, 6], [3, 6], [2, 6], [1, 6], [0, 6]]
       result = dummy_white.remove_invalid_last_move(set_of_moves, board)
       expect(result).to eq(set_of_moves)
