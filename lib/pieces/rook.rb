@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require_relative '../modules/moves_validator'
 # a class for all rook related operations
 class Rook
+  include MovesValidator
   attr_accessor :piece, :color
 
   def initialize(color)
@@ -16,6 +18,7 @@ class Rook
     until row.zero?
       row -= 1
       moves << [row, column]
+      # break unless continue_step?({ row: row, column: column }, board)
     end
     moves
   end
@@ -51,5 +54,12 @@ class Rook
       moves << [row, column]
     end
     moves
+  end
+
+  def continue_step?(position, board)
+    tile = board.grid[position[:row]][position[:column]]
+    return true if tile == ' '
+
+    false
   end
 end
