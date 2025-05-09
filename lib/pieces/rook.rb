@@ -47,13 +47,14 @@ class Rook
     moves
   end
 
-  def left_moves(position)
+  def left_moves(position, board)
     row = position[:row]
     column = position[:column]
     moves = []
     until column.zero?
       column -= 1
       moves << [row, column]
+      break unless continue_step?({ row: row, column: column }, board)
     end
     moves
   end
