@@ -78,7 +78,7 @@ describe Rook do # rubocop:disable Metrics/BlockLength
       grid_val[5][7] = double('pawn', color: 0)
       grid_val[4][7] = double('pawn', color: 1)
     end
-    it 'returns an array with the correct set of moves when the last move has a piece of same color' do
+    it 'returns an array with the correct set of moves when the last move has a piece of opposite color' do
       initial_position = { row: 5, column: 3 }
       expected_moves = [[5, 4], [5, 5], [5, 6], [5, 7]]
       set_of_moves = white_rook.right_moves(initial_position, board)
@@ -105,13 +105,28 @@ describe Rook do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe '#left_moves' do
-    it 'returns an array with the correct set of moves' do
-      initial_position = { row: 4, column: 3 }
-      expected_moves = [[4, 2], [4, 1], [4, 0]]
-      set_of_moves = white_rook.left_moves(initial_position)
+  describe '#left_moves' do # rubocop:disable Metrics/BlockLength
+    before do
+      grid_val[3][2] = double('pawn', color: 0)
+      grid_val[4][2] = double('pawn', color: 1)
+    end
+    it 'returns an array with the correct set of moves if the last moves has the same color' do
+      initial_position = { row: 3, column: 6 }
+      expected_moves = [[3, 5], [3, 4], [3, 3], [3, 2]]
+      set_of_moves = white_rook.left_moves(initial_position, board)
       moves_length = set_of_moves.length
-      expect(moves_length).to eq(3)
+      expect(moves_length).to eq(4)
+      expected_moves.each do |expected_move|
+        expect(set_of_moves).to include(expected_move)
+      end
+    end
+
+    it 'returns an array with the correct set of moves if the last moves has the opposite color' do
+      initial_position = { row: 4, column: 6 }
+      expected_moves = [[4, 5], [4, 4], [4, 3], [4, 2]]
+      set_of_moves = white_rook.left_moves(initial_position, board)
+      moves_length = set_of_moves.length
+      expect(moves_length).to eq(4)
       expected_moves.each do |expected_move|
         expect(set_of_moves).to include(expected_move)
       end
@@ -119,7 +134,7 @@ describe Rook do # rubocop:disable Metrics/BlockLength
 
     it 'returns an empty array if there is no valid moves' do
       initial_position = { row: 4, column: 0 }
-      set_of_moves = white_rook.left_moves(initial_position)
+      set_of_moves = white_rook.left_moves(initial_position, board)
       expect(set_of_moves.empty?).to be(true)
     end
   end
