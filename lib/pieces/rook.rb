@@ -65,4 +65,13 @@ class Rook
 
     false
   end
+
+  def available_moves(position, board)
+    left_moves = remove_invalid_last_move(left_moves(position, board), board)
+    right_moves = remove_invalid_last_move(right_moves(position, board), board)
+    upward_moves = remove_invalid_last_move(upward_moves(position, board), board)
+    downward_moves = remove_invalid_last_move(downward_moves(position, board), board)
+
+    left_moves + right_moves + upward_moves + downward_moves
+  end
 end
