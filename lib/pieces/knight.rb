@@ -19,4 +19,11 @@ class Knight
     end
     moves
   end
+
+  def available_moves(position, board)
+    possible_moves(position).select do |row, column|
+      piece = board[row][column]
+      piece == '' || piece.color != color
+    end
+  end
 end
