@@ -4,8 +4,8 @@
 class Knight
   attr_accessor :piece, :type
 
-  def initialize(type)
-    @piece = type.zero? ? "\u2658" : "\u265E"
-    @type = type
+  def initialize(color)
+    @piece = color.zero? ? "\u2658" : "\u265E"
+    @color = color
   end
 end
