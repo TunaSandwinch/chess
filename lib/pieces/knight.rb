@@ -2,7 +2,7 @@
 
 # a class for all knight related operations
 class Knight
-  attr_accessor :piece, :type
+  attr_accessor :piece, :color
 
   def initialize(color)
     @piece = color.zero? ? "\u2658" : "\u265E"
@@ -22,8 +22,8 @@ class Knight
 
   def available_moves(position, board)
     possible_moves(position).select do |row, column|
-      piece = board[row][column]
-      piece == '' || piece.color != color
+      piece = board.grid[row][column]
+      piece == ' ' || piece.color != color
     end
   end
 end
