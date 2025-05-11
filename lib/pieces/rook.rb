@@ -61,9 +61,9 @@ class Rook
 
   def continue_step?(position, board)
     tile = board.grid[position[:row]][position[:column]]
-    return true if tile == ' '
+    return false unless tile == ' ' || tile.color == color
 
-    false
+    true
   end
 
   def available_moves(position, board)
