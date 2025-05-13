@@ -21,4 +21,11 @@ class Bishop
     end
     valid_moves
   end
+
+  def available_moves(position, board)
+    increments = [[-1, 1], [1, -1], [-1, -1], [1, 1]]
+    valid_moves = []
+    increments.each { |increment| valid_moves + moves(increment, position, board) }
+    valid_moves
+  end
 end
