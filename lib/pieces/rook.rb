@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../modules/moves_validator'
+require_relative '../modules/moves_generator'
 # a class for all rook related operations
 class Rook
-  include MovesValidator
+  include MovesGenerator
   attr_accessor :piece, :color
 
   def initialize(color)
@@ -14,7 +14,7 @@ class Rook
   def available_moves(position, board)
     increments = [[-1, 0], [1, 0], [0, 1], [0, -1]]
     valid_moves = []
-    increments.each { |increment| valid_moves + moves(increment, position, board) }
+    increments.each { |increment| valid_moves += moves(increment, position, board) }
     valid_moves
   end
 end
