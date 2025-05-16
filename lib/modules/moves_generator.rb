@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/pieces/king'
 # a module for validating the set of moves for each piece
 module MovesGenerator
   def moves(increment, position, board)
