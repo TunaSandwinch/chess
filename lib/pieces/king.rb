@@ -26,5 +26,12 @@ class King
     end
     moves
   end
+
+  def possible_moves(board)
+    inrange_moves.select do |row, column|
+      tile = board.grid[row][column]
+      tile == ' ' || tile.color != color
+    end
+  end
 end
 # do an in range moves method and then possible moves method then do a check? method
