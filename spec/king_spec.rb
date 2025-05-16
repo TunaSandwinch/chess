@@ -3,12 +3,12 @@
 require_relative '../lib/pieces/king'
 
 describe King do
-  subject(:king_black) { described_class.new(0, { row: 3, column: 4 }) }
-  subject(:king_white) { described_class.new(1, { row: 0, column: 0 }) }
+  subject(:king_black) { described_class.new(1, { row: 3, column: 4 }) }
+  subject(:king_white) { described_class.new(0, { row: 0, column: 0 }) }
   let(:grid_val) { Array.new(8) { Array.new(8, ' ') } }
   let(:board) { double('board', grid: grid_val) }
 
-  describe 'in_range_moves' do
+  describe '#inrange_moves' do
     it 'returns an array of with correct values' do
       set_of_moves = king_black.inrange_moves
       expected_set_of_moves = [[2, 3], [3, 3], [4, 3], [4, 4], [4, 5], [3, 5], [2, 5], [2, 4]]
@@ -16,6 +16,24 @@ describe King do
         expect(set_of_moves).to include(move)
       end
       expect(set_of_moves.length).to eq(expected_set_of_moves.length)
+    end
+  end
+
+  describe '#possible_moves' do
+    before do
+      grid_val[2][3] = double('pawn', color: 1)
+      grid_val[3][3] = double('pawn', color: 1)
+      grid_val[4][3] = double('pawm', color: 0)
+    end
+    it 'removes invalid tiles from the set of moves' do
+      inrange_moves_result = [[2, 3], [3, 3], [4, 3], [4, 4], [4, 5], [3, 5], [2, 5], [2, 4]]
+      allow(king_black).to receive(:inrange_moves).and_return(inrange_moves_result)
+      expected_result = [[4, 3], [4, 4], [4, 5], [3, 5], [2, 5], [2, 4]]
+      set_of_moves = king_black.possible_moves(board)
+      expected_result.each do |move|
+        expect(set_of_moves).to include(move)
+      end
+      expect(set_of_moves.length).to eq(expected_result.length)
     end
   end
 end
