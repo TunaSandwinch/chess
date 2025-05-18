@@ -3,10 +3,12 @@
 require_relative 'bishop'
 require_relative 'knight'
 require_relative 'rook'
+require_relative 'pawn'
 # a class for all king related operations
 class King
   attr_accessor :piece, :color, :current_position
 
+  include MovesGenerator
   def initialize(color, initial_position)
     @piece = color.zero? ? "\u2654" : "\u265A"
     @color = color
@@ -33,5 +35,12 @@ class King
       tile == ' ' || tile.color != color
     end
   end
+
+  def last_tiles(set_of_moves)
+    last_tiles = []
+    set_of_moves.each do |tiles|
+      last_tiles << tiles.last unless tiles.empty?
+    end
+    last_tiles
+  end
 end
-# do an in range moves method and then possible moves method then do a check? method
