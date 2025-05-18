@@ -6,8 +6,8 @@ module MovesGenerator
     valid_moves = []
     row, column = position.values_at(:row, :column)
     while row.between?(1, 6) && column.between?(1, 6)
-      row += increment[:row]
-      column += increment[:column]
+      row += increment[0]
+      column += increment[1]
       tile = board.grid[row][column]
       valid_moves << [row, column]
       return (tile.color == color ? valid_moves.tap(&:pop) : valid_moves) if tile.respond_to?(:color)
