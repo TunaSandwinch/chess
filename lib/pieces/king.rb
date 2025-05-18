@@ -47,13 +47,27 @@ class King
   end
 
   def checked_diagonaly?(position, board)
-    bishop_moves = [moves([-1, 1], position, board),
-                    moves([1, -1], position, board),
-                    moves([-1, -1], position, board),
-                    moves([1, 1], position, board)]
-    last_tiles(bishop_moves).each do |move|
+    diagonal_moves = [moves([-1, 1], position, board),
+                      moves([1, -1], position, board),
+                      moves([-1, -1], position, board),
+                      moves([1, 1], position, board)]
+    last_tiles(diagonal_moves).each do |move|
       tile = board.grid[move[:row]][move[:column]]
       return true if tile.respond_to?(:color) && (tile.is_a?(Bishop) || tile.is_a?(Queen))
+    end
+    false
+  end
+
+  def checked_horizontaly?(position, board)
+    horizontal_moves = [moves([-1, 0], position, board),
+                        moves([1, 0], position, board),
+                        moves([0, 1], position, board),
+                        moves([0, -1], position, board)]
+    last_tiles(horizontal_moves).each do |move|
+      next if move.empty?
+
+      tile = board.grid[move[:row]][move[:column]]
+      return true if tile.respond_to?(:color) && (tile.is_a?(Rook) || tile.is_a?(Queen))
     end
     false
   end
