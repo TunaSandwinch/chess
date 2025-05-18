@@ -4,6 +4,7 @@ require_relative 'bishop'
 require_relative 'knight'
 require_relative 'rook'
 require_relative 'pawn'
+require_relative 'queen'
 # a class for all king related operations
 class King
   attr_accessor :piece, :color, :current_position
@@ -30,17 +31,30 @@ class King
   end
 
   def possible_moves(board)
-    inrange_moves.select do |row, column|
+    moves = inrange_moves.select do |row, column|
       tile = board.grid[row][column]
       tile == ' ' || tile.color != color
     end
+    moves.map { |row, column| { row: row, column: column } }
   end
 
   def last_tiles(set_of_moves)
     last_tiles = []
     set_of_moves.each do |tiles|
-      last_tiles << tiles.last unless tiles.empty?
+      last_tiles << { row: tiles.last[0], column: tiles.last[1] } unless tiles.empty?
     end
     last_tiles
+  end
+
+  def checked_diagonaly?(position, board)
+    bishop_moves = [moves([-1, 1], position, board),
+                    moves([1, -1], position, board),
+                    moves([-1, -1], position, board),
+                    moves([1, 1], position, board)]
+    last_tiles(bishop_moves).each do |move|
+      tile = board.grid[move[:row]][move[:column]]
+      return true if tile.respond_to?(:color) && (tile.is_a?(Bishop) || tile.is_a?(Queen))
+    end
+    false
   end
 end
