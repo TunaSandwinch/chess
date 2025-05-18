@@ -52,6 +52,8 @@ class King
                       moves([-1, -1], position, board),
                       moves([1, 1], position, board)]
     last_tiles(diagonal_moves).each do |move|
+      next if move.empty?
+
       tile = board.grid[move[:row]][move[:column]]
       return true if tile.respond_to?(:color) && (tile.is_a?(Bishop) || tile.is_a?(Queen))
     end
