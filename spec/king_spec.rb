@@ -55,7 +55,7 @@ describe King do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe '#checked_by_bishop?' do
+  describe '#checked_diagonaly?' do
     context 'when the move will cause a check' do
       before do
         grid_val[0][3] = Bishop.new(0)
@@ -63,11 +63,11 @@ describe King do # rubocop:disable Metrics/BlockLength
         grid_val[0][2] = Bishop.new(0)
         grid_val[1][3] = Pawn.new(1)
       end
-      it 'it returns true if the intended tile will be checked by a Bishop' do
+      it 'returns true if the move will cause a check by a Bishop' do
         move_position = { row: 2, column: 5 }
         expect(king_black.checked_diagonaly?(move_position, board)).to be(true)
       end
-      it 'it returns true if the intended tile will be checked by a Queen' do
+      it 'returns true if the move will cause a check by a Queen' do
         move_position = { row: 4, column: 4 }
         expect(king_black.checked_diagonaly?(move_position, board)).to be(true)
       end
@@ -76,6 +76,35 @@ describe King do # rubocop:disable Metrics/BlockLength
       it 'returns false if a move will not cause a check' do
         move_position = { row: 3, column: 5 }
         expect(king_black.checked_diagonaly?(move_position, board)).to be(false)
+      end
+    end
+  end
+
+  describe '#checked_horizontaly?' do
+    context 'when the move will cause a check' do
+      before do
+        grid_val[7][3] = Rook.new(0)
+        grid_val[2][7] = Queen.new(0)
+      end
+      it 'returns true if the move will cause a check by a rook' do
+        move_position = { row: 2, column: 3 }
+        expect(king_black.checked_horizontaly?(move_position, board)).to be(true)
+      end
+
+      it 'returns true if the move will cause a check by queen' do
+        move_position = { row: 2, column: 3 }
+        expect(king_black.checked_horizontaly?(move_position, board)).to be(true)
+      end
+    end
+
+    context 'when the move will not cause a check' do
+      before do
+        grid_val[6][4] = Pawn.new(0)
+        grid_val[7][4] = Queen.new(0)
+      end
+      it 'returns false if a move will not cause a check' do
+        move_position = { row: 4, column: 4 }
+        expect(king_black.checked_horizontaly?(move_position, board)).to be(false)
       end
     end
   end
