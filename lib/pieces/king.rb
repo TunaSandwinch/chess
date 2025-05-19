@@ -90,4 +90,11 @@ class King
     end
     false
   end
+
+  def check?(position, board)
+    check_by_pawn?(position, board) ||
+      checked_horizontaly?(position, board) ||
+      checked_diagonaly?(position, board) ||
+      check_by_knight?(position, board)
+  end
 end
