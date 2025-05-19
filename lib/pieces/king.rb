@@ -97,4 +97,14 @@ class King
       checked_diagonaly?(position, board) ||
       check_by_knight?(position, board)
   end
+
+  def available_moves(_position, board)
+    moves = []
+    possible_moves(board).each do |move|
+      row = move[:row]
+      column = move[:column]
+      moves << [row, column] unless check?(move, board)
+    end
+    moves
+  end
 end
