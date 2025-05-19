@@ -147,4 +147,20 @@ describe King do # rubocop:disable Metrics/BlockLength
       end
     end
   end
+
+  describe '#available_moves' do
+    context 'when possible moves has tiles that can cause check' do
+      before do
+        grid_val[7][1] = Bishop.new(0)
+      end
+      it 'only returns an array of moves that does not cause a check' do
+        expected_result = [[2, 4], [2, 3], [2, 5], [4, 5], [4, 3], [3, 3]]
+        result = king_black.available_moves(0, board)
+        expected_result.each do |move|
+          expect(result).to include(move)
+        end
+        expect(result.length).to eq(expected_result.length)
+      end
+    end
+  end
 end
