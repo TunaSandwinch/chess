@@ -108,4 +108,24 @@ describe King do # rubocop:disable Metrics/BlockLength
       end
     end
   end
+
+  describe '#check_by_pawn?' do
+    before do
+      grid_val[5][2] = Pawn.new(0)
+      grid_val[5][3] = Rook.new(0)
+      grid_val[5][5] = Knight.new(0)
+    end
+    context 'when the move will cause a check' do
+      it 'returns true if the move will cause a check by pawn' do
+        move_position = { row: 4, column: 3 }
+        expect(king_black.check_by_pawn?(move_position, board)).to be(true)
+      end
+    end
+    context 'when the move will not cause a check' do
+      it 'returns false' do
+        move_position = { row: 4, column: 4 }
+        expect(king_black.check_by_pawn?(move_position, board)).to be(false)
+      end
+    end
+  end
 end
