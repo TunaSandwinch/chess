@@ -128,4 +128,23 @@ describe King do # rubocop:disable Metrics/BlockLength
       end
     end
   end
+
+  describe '#check_by_knight' do
+    context 'when the move will cause a check' do
+      before do
+        grid_val[5][7] = Knight.new(0)
+      end
+      it 'returns true if the check is cause by knight' do
+        move_position = { row: 4, column: 5 }
+        expect(king_black.check_by_knight?(move_position, board)).to be(true)
+      end
+    end
+
+    context 'when the move will not cause a check' do
+      it 'returns false' do
+        move_position = { row: 2, column: 5 }
+        expect(king_black.check_by_knight?(move_position, board)).to be(false)
+      end
+    end
+  end
 end
