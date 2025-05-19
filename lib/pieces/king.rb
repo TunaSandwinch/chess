@@ -7,7 +7,7 @@ require_relative 'pawn'
 require_relative 'queen'
 # a class for all king related operations
 class King
-  attr_accessor :piece, :color, :current_position, :pawn
+  attr_accessor :piece, :color, :current_position, :pawn, :knight
 
   include MovesGenerator
   def initialize(color, initial_position)
@@ -15,6 +15,7 @@ class King
     @color = color
     @current_position = initial_position
     @pawn = Pawn.new(color)
+    @knight = Knight.new(color)
   end
 
   def inrange_moves
@@ -77,6 +78,15 @@ class King
       tile = board.grid[row][column]
 
       return true if tile.respond_to?(:color) && tile.is_a?(Pawn)
+    end
+    false
+  end
+
+  def check_by_knight?(position, board)
+    knight.available_moves(position, board).each do |row, column|
+      tile = board.grid[row][column]
+
+      return true if tile.respond_to?(:color) && tile.is_a?(Knight)
     end
     false
   end
