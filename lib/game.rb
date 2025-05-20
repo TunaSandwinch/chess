@@ -44,7 +44,7 @@ class Game
     true
   end
 
-  def piece_to_move
+  def piece_coordinate
     loop do
       puts 'choose a piece to move ex. e4, e5 etc:'
       player_input = gets.chomp.downcase
@@ -55,8 +55,28 @@ class Game
       return player_piece if valid_piece?(player_piece) && piece_has_moves?(player_piece)
     end
   end
+
+  def move_to_coordinate(piece_coordinate)
+    loop do
+      puts 'move your piece to? :'
+      player_input = gets.chomp.downcase
+      return piece_location(player_input) if valid_input?(player_input) && move_in_available_moves?(piece_coordinate,
+                                                                                                    player_input)
+
+      puts "your piece can't go there!"
+    end
+  end
+
+  def move_in_available_moves?(piece_coordinate, move_coordinate)
+    row = piece_coordinate[:row]
+    column = piece_coordinate[:column]
+    move_location = piece_location(move_coordinate)
+    board.grid[row][column].available_moves(piece_coordinate,
+                                            board).include?([move_location[:row], move_location[:column]])
+  end
 end
 
 # game = Game.new
 # game.board.display
-# game.piece_to_move
+# piece_to_move_coordinate = game.piece_coordinate
+# game.move_to_coordinate(piece_to_move_coordinate)
