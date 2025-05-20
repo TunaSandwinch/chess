@@ -11,7 +11,7 @@ class Board
   attr_accessor :grid
 
   def initialize
-    @grid = Array.new(8) { Array.new(8, '  ') }
+    @grid = Array.new(8) { Array.new(8, ' ') }
     setup_board
   end
 
@@ -27,8 +27,9 @@ class Board
                  Bishop.new(0),
                  Knight.new(0),
                  Rook.new(0)]
-    grid[6] = pawns
-    grid[7] = officials
+    grid[1] = pawns # 6
+    grid[0] = officials # 7
+    # the black and white piece hase been swap in position in the grid matrix to allow for easier navigation
   end
 
   def setup_black_pieces
@@ -38,27 +39,31 @@ class Board
                  Bishop.new(1),
                  Knight.new(1),
                  Rook.new(1)]
-    grid[1] = pawns
-    grid[0] = officials
+    grid[6] = pawns # 1
+    grid[7] = officials # 0
   end
 
   def display
-    white_bg = "\e[47m"  # white background
-    black_bg = "\e[100m" # dark gray background
+    white_bg = "\e[47m"   # white tile
+    black_bg = "\e[100m"  # dark gray tile
+    white_fg = "\e[37m"   # white piece
+    black_fg = "\e[90m"   # gray piece (better contrast than pure black)
     reset    = "\e[0m"
 
-    puts '    a  b  c  d  e  f  g  h'
-    grid.each_with_index do |row, i|
+    puts '    a   b   c   d   e   f   g   h'
+    grid.reverse.each_with_index do |row, i|
       print " #{8 - i} "
       row.each_with_index do |cell, j|
         background = (i + j).even? ? white_bg : black_bg
-        content = cell.respond_to?(:piece) ? cell.piece : ' '
-        print "#{background} #{content} #{reset}"
+        if cell.respond_to?(:color) && cell.respond_to?(:piece)
+          fg_color = cell.color == 0 ? white_fg : black_fg
+          print "#{background} #{fg_color}#{cell.piece}  #{reset}"
+        else
+          print "#{background}    #{reset}"
+        end
       end
       puts " #{8 - i}"
     end
-    puts '    a  b  c  d  e  f  g  h'
+    puts '    a   b   c   d   e   f   g   h'
   end
 end
-
-Board.new.display
