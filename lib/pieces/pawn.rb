@@ -12,7 +12,7 @@ class Pawn
   def capture_moves(position)
     row = position[:row]
     column = position[:column]
-    increment = color.zero? ? -1 : 1
+    increment = color.zero? ? 1 : -1
 
     [
       [row + increment, column - 1],
@@ -33,7 +33,7 @@ class Pawn
   def forward_move(position, board)
     row = position[:row]
     column = position[:column]
-    increment = color.zero? ? -1 : 1
+    increment = color.zero? ? 1 : -1
 
     return [[row + increment, column]] if board.grid[row + increment][column] == ' '
 
